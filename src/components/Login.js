@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 function Login() {
       const [username, setUsername] = useState("");
       const [password, setPassword] = useState("");
-
-      function handleSubmit(event){
+    //   const usertoken='';
+       function handleSubmit(event){
         event.preventDefault();
          console.log(username);
          console.log(password);
@@ -16,9 +16,16 @@ function Login() {
             // expiresInMins: 60, // optional
           }),
         })
-          .then((res) => res.json())
-          .then(console.log);
+          .then((res) => { return res.json()})
+          .then(((data)=>{
+           const  usertoken= data.token;
+           console.log(`receivedTocken:${usertoken}`);
+           localStorage.setItem("token", usertoken);
+        //    console.log(data.token);
+          }))
+          .catch((console.error()));
       }
+
   return (
     <div className="card">
       <form onSubmit={handleSubmit}>
